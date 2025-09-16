@@ -1,164 +1,332 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Landing Page - Exemplo</title>
-  <style>
-    :root{
-      --cor-principal:#4f46e5;      /* indigo-600 */
-      --cor-principal-2:#6366f1;    /* indigo-500 */
-      --cor-fundo:#0b1020;
-      --cor-texto:#e5e7eb;
-      --cor-borda:#1f294a;
-      --radius:14px;
-    }
-    *{box-sizing:border-box}
-    html,body{margin:0;padding:0;height:100%}
-    body{
-      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Inter, Arial, sans-serif;
-      background: radial-gradient( circle at 20% -10%, rgba(99,102,241,.25), transparent 40% ),
-                  radial-gradient( circle at 100% 0%, rgba(99,102,241,.15), transparent 30% ),
-                  var(--cor-fundo);
-      color:var(--cor-texto);
-      line-height:1.6;
-    }
-    .container{
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 48px 20px 80px;
-    }
-    header{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      padding: 20px 0;
-      border-bottom:1px solid rgba(255,255,255,.08);
-      position: sticky;
-      top:0;
-      backdrop-filter: saturate(1.2) blur(6px);
-      background: rgba(11,16,32,.75);
-      z-index: 10;
-    }
-    .brand{
-      display:flex; align-items:center; gap:12px;
-      font-weight:700; letter-spacing:.4px;
-    }
-    .brand .logo{
-      width:32px; height:32px; border-radius:9px;
-      background: linear-gradient(135deg, var(--cor-principal), #22c55e);
-      display:inline-block;
-    }
-    nav a{
-      color:var(--cor-texto);
-      text-decoration:none;
-      margin:0 12px;
-      font-size:14px;
-      opacity:.9;
-    }
-    .cta {
-      display:inline-block;
-      padding:12px 20px;
-      border-radius:999px;
-      background: linear-gradient(135deg, var(--cor-principal), var(--cor-principal-2));
-      color:white;
-      text-decoration:none;
-      font-weight:600;
-      box-shadow: 0 6px 18px rgba(99,102,241,.45);
-    }
-    .hero {
-      display:grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap:40px;
-      align-items:center;
-      padding: 60px 0;
-    }
-    .hero h1{
-      font-size: clamp(2rem, 2.6vw + 1rem, 3.8rem);
-      margin:0 0 12px;
-    }
-    .hero p{ font-size:1.05rem; color:#d8dde9; max-width: 60ch; }
-    .cards {
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap:14px;
-      margin-top:22px;
-    }
-    .card{
-      background: rgba(255,255,255,.04);
-      border:1px solid rgba(255,255,255,.08);
-      border-radius:12px;
-      padding:14px;
-      font-size:14px;
-    }
-    .hero-art{
-      width:100%; height:340px;
-      border-radius:var(--radius);
-      background: linear-gradient(135deg, #1f1f3a, #0b1a3a);
-      display:flex; align-items:center; justify-content:center;
-      color:#cfe3ff;
-      border:1px solid rgba(255,255,255,.08);
-    }
-    footer{
-      text-align:center;
-      color:#a3a3a3;
-      padding:40px 0 60px;
-      font-size:13px;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WCimóveis</title>
+    <style>
+        /* RESET BÁSICO */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    @media (max-width: 900px){
-      .hero{ grid-template-columns: 1fr; padding: 40px 0; }
-      .hero-art{ order:-1; height:260px; }
-    }
-  </style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: #222;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        nav {
+            background-color: #444;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        nav a {
+            color: #fff;
+            padding: 15px 20px;
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+
+        nav a:hover {
+            background-color: #666;
+        }
+
+        section {
+            padding: 40px 20px;
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        h2 {
+            color: #111;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            text-align: center;
+        }
+
+        /* ESTILO DOS ANÚNCIOS */
+        .grid-anuncios {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .imovel {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0px 2px 6px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .imovel img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .descricao {
+            padding: 15px;
+            flex: 1;
+        }
+
+        .descricao h3 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        /* ARTIGOS */
+        article {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            box-shadow: 0px 2px 6px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        /* TABELA DE ÍNDICES */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: center;
+        }
+
+        table th {
+            background: #444;
+            color: #fff;
+        }
+
+        table tr:nth-child(even) {
+            background: #f2f2f2;
+        }
+
+        /* FOOTER */
+        footer {
+            background-color: #222;
+            color: #fff;
+            text-align: center;
+            padding: 15px;
+            margin-top: 30px;
+        }
+
+        /* BOTÃO FIXO WHATSAPP */
+        .whatsapp-float {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 20px;
+            right: 20px;
+            background-color: #25d366;
+            color: #fff;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+        }
+
+        /* RESPONSIVIDADE */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.6em;
+            }
+            nav {
+                flex-direction: column;
+            }
+            nav a {
+                text-align: center;
+                border-top: 1px solid #555;
+            }
+        }
+    </style>
+    <!-- Ícone do WhatsApp (Font Awesome CDN) -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
-  <header>
-    <div class="container" style="display:flex; align-items:center; justify-content:space-between; width:100%;">
-      <div class="brand" aria-label="Marca">
-        <span class="logo" aria-hidden="true"></span>
-        <span>Meu Produto</span>
-      </div>
-      <nav aria-label="Navegação principal" style="display:flex; align-items:center;">
-        <a href="#recursos">Recursos</a>
-        <a href="#sobre">Sobre</a>
+    <header>
+        <h1>WCimóveis</h1>
+        <p>Imóveis de qualidade em Natal/RN e Parnamirim/RN</p>
+    </header>
+
+    <nav>
+        <a href="#quem-sou">Quem Sou</a>
+        <a href="#anuncios">Anúncios para Vendas</a>
+        <a href="#informacoes-natal">Informações dos Imóveis de Natal</a>
+        <a href="#indices">Tabela de Índices Imobiliários</a>
         <a href="#contato">Contato</a>
-        <a href="#signup" class="cta" style="margin-left:8px;">Experimente Grátis</a>
-      </nav>
-    </div>
-  </header>
+        <a href="#localizacao">Localização</a>
+    </nav>
 
-  <main class="container">
-    <section class="hero" aria-label="Seção principal">
-      <div>
-        <h1>Transforme a forma como sua equipe trabalha</h1>
-        <p>Uma solução simples, rápida e poderosa para colaborar, planejar e entregar resultados. Comece já e veja a diferença em minutos.</p>
-        <a href="#signup" class="cta" style="margin-top:6px; display:inline-block;">Teste Grátis por 14 dias</a>
-
-        <div id="recursos" class="cards" aria-label="Recursos principais">
-          <div class="card">
-            <strong>Colaboração em tempo real</strong>
-            <div style="font-size:12px; opacity:.8">Trabalhe junto com sua equipe de onde estiver.</div>
-          </div>
-          <div class="card">
-            <strong>Plataforma única</strong>
-            <div style="font-size:12px; opacity:.8">Integrado e fácil de usar — sem curva alta.</div>
-          </div>
-          <div class="card">
-            <strong>Resultados mensuráveis</strong>
-            <div style="font-size:12px; opacity:.8">Acompanhe métricas e progresso de perto.</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="hero-art" aria-label="Ilustração demonstrativa">
-        <span style="font-size:28px; opacity:.9;">[Ilustração]</span>
-      </div>
+    <section id="quem-sou">
+        <h2>Quem Sou</h2>
+        <article>
+            <p>Sou <strong>Wanderson Camilo</strong>, corretor de imóveis com 37 anos, residente em Macaíba/RN. 
+            Formado em Gestão de Imóveis e inscrito no <strong>CRECI-RN 8837</strong>, atuo no mercado imobiliário com 
+            foco em imóveis de médio e alto padrão, sempre buscando oferecer atendimento diferenciado, 
+            transparência e confiança aos meus clientes.</p>
+        </article>
     </section>
-  </main>
 
-  <footer id="contato" aria-label="Rodapé">
-    © 2025 Meu Produto. Todos os direitos reservados.
-  </footer>
+    <section id="anuncios">
+        <h2>Anúncios para Vendas</h2>
+        <div class="grid-anuncios">
+            <div class="imovel">
+                <img src="images/imovel1.jpg" alt="Casa em condomínio fechado">
+                <div class="descricao">
+                    <h3>Casa em Condomínio Fechado - Natal/RN</h3>
+                    <p>Residência de 3 suítes, sala ampla, cozinha planejada e área gourmet. Localização privilegiada.</p>
+                </div>
+            </div>
+
+            <div class="imovel">
+                <img src="images/imovel2.jpg" alt="Apartamento moderno">
+                <div class="descricao">
+                    <h3>Apartamento de Alto Padrão - Parnamirim/RN</h3>
+                    <p>Apartamento com 3 quartos, varanda gourmet e 2 vagas de garagem. Condomínio com lazer completo.</p>
+                </div>
+            </div>
+
+            <div class="imovel">
+                <img src="images/imovel3.jpg" alt="Cobertura duplex">
+                <div class="descricao">
+                    <h3>Cobertura Duplex - Natal/RN</h3>
+                    <p>Luxuosa cobertura com piscina privativa, 4 suítes e vista para o mar.</p>
+                </div>
+            </div>
+
+            <div class="imovel">
+                <img src="images/imovel4.jpg" alt="Casa ampla com jardim">
+                <div class="descricao">
+                    <h3>Casa Ampla com Jardim - Parnamirim/RN</h3>
+                    <p>Casa com 4 quartos, 3 banheiros, garagem para 3 carros e amplo quintal arborizado.</p>
+                </div>
+            </div>
+
+            <div class="imovel">
+                <img src="images/imovel5.jpg" alt="Apartamento compacto">
+                <div class="descricao">
+                    <h3>Apartamento Compacto - Natal/RN</h3>
+                    <p>Ideal para casais ou investidores. 2 quartos, cozinha americana e ótima localização.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="informacoes-natal">
+        <h2>Informações dos Imóveis de Natal</h2>
+        <article>
+            <p>O mercado imobiliário de Natal/RN segue aquecido em 2025, principalmente em bairros nobres e em condomínios residenciais. 
+            Os preços variam conforme a localização, infraestrutura e padrão de acabamento.</p>
+            <ul>
+                <li><strong>Residências em Condomínios:</strong> valores médios entre R$ 700.000,00 e R$ 1.500.000,00.</li>
+                <li><strong>Casas em Bairros Nobres:</strong> entre R$ 900.000,00 e R$ 2.000.000,00.</li>
+                <li><strong>Apartamentos de Classe Média:</strong> preços entre R$ 350.000,00 e R$ 600.000,00.</li>
+            </ul>
+        </article>
+    </section>
+
+    <section id="indices">
+        <h2>Tabela de Índices Imobiliários</h2>
+        <article>
+            <p>Confira os principais índices atualizados do mercado imobiliário em 2025:</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Região</th>
+                        <th>Tipo de Imóvel</th>
+                        <th>Preço Médio (m²)</th>
+                        <th>Variação Anual (%)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Natal/RN</td>
+                        <td>Apartamento</td>
+                        <td>R$ 6.200</td>
+                        <td>+5,8%</td>
+                    </tr>
+                    <tr>
+                        <td>Natal/RN</td>
+                        <td>Casa em Condomínio</td>
+                        <td>R$ 6.800</td>
+                        <td>+6,1%</td>
+                    </tr>
+                    <tr>
+                        <td>Nordeste</td>
+                        <td>Residencial Médio</td>
+                        <td>R$ 5.500</td>
+                        <td>+4,9%</td>
+                    </tr>
+                    <tr>
+                        <td>Brasil</td>
+                        <td>Média Nacional</td>
+                        <td>R$ 7.000</td>
+                        <td>+7,2%</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>Esses dados reforçam o momento de valorização do mercado, sendo um ótimo período para investimentos e negociações.</p>
+        </article>
+    </section>
+
+    <section id="contato">
+        <h2>Contato</h2>
+        <article>
+            <p>Entre em contato para mais informações e agendamento de visitas:</p>
+            <ul>
+                <li>Telefone: (84) 99428-9931</li>
+                <li>Email: wandersoncamilo@wcimoveis.com</li>
+                <li>WhatsApp: (84) 99428-9931</li>
+                <li>Instagram: #wandersoncamilo89</li>
+            </ul>
+        </article>
+    </section>
+
+    <section id="localizacao">
+        <h2>Localização</h2>
+        <article>
+            <p>Atendimento em Natal/RN, Parnamirim/RN e região metropolitana.</p>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!..." width="100%" height="350" style="border:0;" allowfullscreen></iframe>
+        </article>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 WCimóveis - Todos os direitos reservados.</p>
+    </footer>
+
+    <!-- Botão Flutuante WhatsApp -->
+    <a href="https://wa.me/5584988888888" class="whatsapp-float" target="_blank" title="Fale pelo WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
 </body>
 </html>
