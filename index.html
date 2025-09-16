@@ -1,12 +1,164 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WCimoveis</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Landing Page - Exemplo</title>
+  <style>
+    :root{
+      --cor-principal:#4f46e5;      /* indigo-600 */
+      --cor-principal-2:#6366f1;    /* indigo-500 */
+      --cor-fundo:#0b1020;
+      --cor-texto:#e5e7eb;
+      --cor-borda:#1f294a;
+      --radius:14px;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;height:100%}
+    body{
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Inter, Arial, sans-serif;
+      background: radial-gradient( circle at 20% -10%, rgba(99,102,241,.25), transparent 40% ),
+                  radial-gradient( circle at 100% 0%, rgba(99,102,241,.15), transparent 30% ),
+                  var(--cor-fundo);
+      color:var(--cor-texto);
+      line-height:1.6;
+    }
+    .container{
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 48px 20px 80px;
+    }
+    header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding: 20px 0;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      position: sticky;
+      top:0;
+      backdrop-filter: saturate(1.2) blur(6px);
+      background: rgba(11,16,32,.75);
+      z-index: 10;
+    }
+    .brand{
+      display:flex; align-items:center; gap:12px;
+      font-weight:700; letter-spacing:.4px;
+    }
+    .brand .logo{
+      width:32px; height:32px; border-radius:9px;
+      background: linear-gradient(135deg, var(--cor-principal), #22c55e);
+      display:inline-block;
+    }
+    nav a{
+      color:var(--cor-texto);
+      text-decoration:none;
+      margin:0 12px;
+      font-size:14px;
+      opacity:.9;
+    }
+    .cta {
+      display:inline-block;
+      padding:12px 20px;
+      border-radius:999px;
+      background: linear-gradient(135deg, var(--cor-principal), var(--cor-principal-2));
+      color:white;
+      text-decoration:none;
+      font-weight:600;
+      box-shadow: 0 6px 18px rgba(99,102,241,.45);
+    }
+    .hero {
+      display:grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap:40px;
+      align-items:center;
+      padding: 60px 0;
+    }
+    .hero h1{
+      font-size: clamp(2rem, 2.6vw + 1rem, 3.8rem);
+      margin:0 0 12px;
+    }
+    .hero p{ font-size:1.05rem; color:#d8dde9; max-width: 60ch; }
+    .cards {
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:14px;
+      margin-top:22px;
+    }
+    .card{
+      background: rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:12px;
+      padding:14px;
+      font-size:14px;
+    }
+    .hero-art{
+      width:100%; height:340px;
+      border-radius:var(--radius);
+      background: linear-gradient(135deg, #1f1f3a, #0b1a3a);
+      display:flex; align-items:center; justify-content:center;
+      color:#cfe3ff;
+      border:1px solid rgba(255,255,255,.08);
+    }
+    footer{
+      text-align:center;
+      color:#a3a3a3;
+      padding:40px 0 60px;
+      font-size:13px;
+    }
+
+    @media (max-width: 900px){
+      .hero{ grid-template-columns: 1fr; padding: 40px 0; }
+      .hero-art{ order:-1; height:260px; }
+    }
+  </style>
 </head>
 <body>
-    <p>TESTANDO NOSSO SITE</p>
-    <p>Wanderson Camilo</p>
+  <header>
+    <div class="container" style="display:flex; align-items:center; justify-content:space-between; width:100%;">
+      <div class="brand" aria-label="Marca">
+        <span class="logo" aria-hidden="true"></span>
+        <span>Meu Produto</span>
+      </div>
+      <nav aria-label="Navegação principal" style="display:flex; align-items:center;">
+        <a href="#recursos">Recursos</a>
+        <a href="#sobre">Sobre</a>
+        <a href="#contato">Contato</a>
+        <a href="#signup" class="cta" style="margin-left:8px;">Experimente Grátis</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero" aria-label="Seção principal">
+      <div>
+        <h1>Transforme a forma como sua equipe trabalha</h1>
+        <p>Uma solução simples, rápida e poderosa para colaborar, planejar e entregar resultados. Comece já e veja a diferença em minutos.</p>
+        <a href="#signup" class="cta" style="margin-top:6px; display:inline-block;">Teste Grátis por 14 dias</a>
+
+        <div id="recursos" class="cards" aria-label="Recursos principais">
+          <div class="card">
+            <strong>Colaboração em tempo real</strong>
+            <div style="font-size:12px; opacity:.8">Trabalhe junto com sua equipe de onde estiver.</div>
+          </div>
+          <div class="card">
+            <strong>Plataforma única</strong>
+            <div style="font-size:12px; opacity:.8">Integrado e fácil de usar — sem curva alta.</div>
+          </div>
+          <div class="card">
+            <strong>Resultados mensuráveis</strong>
+            <div style="font-size:12px; opacity:.8">Acompanhe métricas e progresso de perto.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-art" aria-label="Ilustração demonstrativa">
+        <span style="font-size:28px; opacity:.9;">[Ilustração]</span>
+      </div>
+    </section>
+  </main>
+
+  <footer id="contato" aria-label="Rodapé">
+    © 2025 Meu Produto. Todos os direitos reservados.
+  </footer>
 </body>
 </html>
