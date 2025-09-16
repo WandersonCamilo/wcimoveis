@@ -1,332 +1,367 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WCimóveis</title>
-    <style>
-        /* RESET BÁSICO */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>WCimóveis — Wanderson Camilo</title>
 
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
-            color: #333;
-            line-height: 1.6;
-        }
+  <!--  ======= STYLES ======= -->
+  <style>
+    /* RESET */
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background:#f6f6f6;color:#222;line-height:1.45;
+      -webkit-font-smoothing:antialiased;padding-bottom:100px;
+    }
 
-        header {
-            background-color: #222;
-            color: #fff;
-            padding: 20px;
-            text-align: center;
-        }
+    /* LAYOUT */
+    .container{max-width:1200px;margin:0 auto;padding:20px}
+    header.site-header{
+      background:#111;color:#fff;padding:28px 20px;border-bottom:4px solid #2b2b2b;
+      display:flex;align-items:center;justify-content:space-between;gap:16px;
+      flex-wrap:wrap;
+    }
+    .brand{display:flex;flex-direction:column}
+    .brand h1{font-size:1.4rem;letter-spacing:0.5px;margin-bottom:4px}
+    .brand p{font-size:0.95rem;opacity:0.9;margin-top:0}
 
-        nav {
-            background-color: #444;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
+    nav.main-nav{
+      display:flex;gap:8px;flex-wrap:wrap;
+      background:#333;padding:8px;border-radius:8px;
+    }
+    nav.main-nav a{
+      color:#fff;text-decoration:none;padding:10px 12px;border-radius:6px;
+      font-size:0.95rem;
+    }
+    nav.main-nav a:hover{background:rgba(255,255,255,0.06)}
 
-        nav a {
-            color: #fff;
-            padding: 15px 20px;
-            text-decoration: none;
-            transition: background 0.3s;
-        }
+    /* HERO */
+    .hero{background:linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0.05)), url('images/hero.jpg') center/cover no-repeat; color:#fff;padding:36px;border-radius:10px;margin:18px 0}
+    .hero .inner{display:flex;gap:20px;align-items:center;flex-wrap:wrap}
+    .hero h2{font-size:1.6rem;margin-bottom:8px}
+    .hero p{max-width:780px;opacity:0.95}
 
-        nav a:hover {
-            background-color: #666;
-        }
+    /* SECTIONS */
+    section{margin:28px 0}
+    section h2{font-size:1.3rem;margin-bottom:14px;text-align:center}
 
-        section {
-            padding: 40px 20px;
-            max-width: 1100px;
-            margin: auto;
-        }
+    article.card{background:#fff;border-radius:10px;padding:18px;border:1px solid #e6e6e6;box-shadow:0 6px 18px rgba(15,15,15,0.04)}
 
-        h2 {
-            color: #111;
-            margin-bottom: 20px;
-            font-size: 1.8em;
-            text-align: center;
-        }
+    /* ANÚNCIOS GRID */
+    .grid-anuncios{
+      display:grid;
+      grid-template-columns:repeat(3, 1fr);
+      gap:18px;
+    }
+    .imovel{
+      background:#fff;border-radius:10px;overflow:hidden;border:1px solid #e8e8e8;display:flex;flex-direction:column;
+      transition:transform .18s ease,box-shadow .18s ease;
+    }
+    .imovel:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(15,15,15,0.06)}
+    .imovel .media{width:100%;height:220px;background:#ddd;display:block;object-fit:cover}
+    .imovel .body{padding:14px;flex:1;display:flex;flex-direction:column;gap:8px}
+    .imovel h3{font-size:1.05rem}
+    .imovel p{font-size:0.95rem;color:#444;opacity:0.95}
 
-        /* ESTILO DOS ANÚNCIOS */
-        .grid-anuncios {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-        }
+    /* RESPONSIVIDADE: medias e detalhes */
+    @media (max-width: 1000px){
+      .grid-anuncios{grid-template-columns:repeat(2, 1fr)}
+      .imovel .media{height:200px}
+    }
+    @media (max-width: 680px){
+      header.site-header{flex-direction:column;align-items:flex-start}
+      .grid-anuncios{grid-template-columns:1fr}
+      .hero .inner{flex-direction:column;align-items:flex-start}
+      .hero{padding:18px}
+    }
 
-        .imovel {
-            background: #fff;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0px 2px 6px rgba(0,0,0,0.1);
-            display: flex;
-            flex-direction: column;
-        }
+    /* INFO NATAL */
+    .lista-info li{margin-bottom:8px}
 
-        .imovel img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-        }
+    /* TABELA ÍNDICES */
+    .table-wrap{overflow-x:auto;margin-top:12px}
+    table.index-table{
+      width:100%;border-collapse:collapse;background:#fff;border-radius:8px;overflow:hidden;
+    }
+    table.index-table th, table.index-table td{
+      padding:12px 10px;border-bottom:1px solid #eee;text-align:center;font-size:0.95rem;
+    }
+    table.index-table thead th{background:#222;color:#fff;font-weight:600}
+    table.index-table tbody tr:nth-child(even){background:#fbfbfb}
 
-        .descricao {
-            padding: 15px;
-            flex: 1;
-        }
+    /* FORMULÁRIO */
+    form.form-contato{display:grid;gap:12px;margin-top:10px}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .form-row .full{grid-column:1/-1}
+    label{font-weight:600;font-size:0.9rem;margin-bottom:6px;display:block}
+    input[type="text"], input[type="email"], textarea{
+      padding:10px;border:1px solid #d6d6d6;border-radius:8px;font-size:0.95rem;width:100%;
+    }
+    button.btn{
+      background:#111;color:#fff;padding:12px 14px;border-radius:8px;border:0;cursor:pointer;font-weight:600;
+    }
+    button.btn:hover{opacity:0.95}
 
-        .descricao h3 {
-            margin-bottom: 10px;
-            color: #333;
-        }
+    /* FIXED WHATSAPP */
+    .whatsapp-float{
+      position:fixed;right:18px;bottom:18px;width:62px;height:62px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+      background:#25d366;color:#fff;font-size:26px;z-index:1200;box-shadow:0 8px 28px rgba(37,211,102,0.22);text-decoration:none;
+    }
 
-        /* ARTIGOS */
-        article {
-            background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            border: 1px solid #ddd;
-            box-shadow: 0px 2px 6px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-        }
+    /* RODAPÉ */
+    footer.site-footer{margin-top:28px;padding:18px;text-align:center;color:#fff;background:#111;border-top:4px solid #222;border-radius:8px}
+    footer.site-footer a{color:#fff;text-decoration:underline}
 
-        /* TABELA DE ÍNDICES */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
-        }
-
-        table th, table td {
-            border: 1px solid #ddd;
-            padding: 12px;
-            text-align: center;
-        }
-
-        table th {
-            background: #444;
-            color: #fff;
-        }
-
-        table tr:nth-child(even) {
-            background: #f2f2f2;
-        }
-
-        /* FOOTER */
-        footer {
-            background-color: #222;
-            color: #fff;
-            text-align: center;
-            padding: 15px;
-            margin-top: 30px;
-        }
-
-        /* BOTÃO FIXO WHATSAPP */
-        .whatsapp-float {
-            position: fixed;
-            width: 60px;
-            height: 60px;
-            bottom: 20px;
-            right: 20px;
-            background-color: #25d366;
-            color: #fff;
-            border-radius: 50%;
-            text-align: center;
-            font-size: 30px;
-            box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.2s ease-in-out;
-        }
-
-        .whatsapp-float:hover {
-            transform: scale(1.1);
-        }
-
-        /* RESPONSIVIDADE */
-        @media (max-width: 768px) {
-            header h1 {
-                font-size: 1.6em;
-            }
-            nav {
-                flex-direction: column;
-            }
-            nav a {
-                text-align: center;
-                border-top: 1px solid #555;
-            }
-        }
-    </style>
-    <!-- Ícone do WhatsApp (Font Awesome CDN) -->
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    /* pequenas melhorias para imagens responsivas (lazy) */
+    img{max-width:100%;display:block;height:auto}
+  </style>
 </head>
 <body>
-    <header>
-        <h1>WCimóveis</h1>
-        <p>Imóveis de qualidade em Natal/RN e Parnamirim/RN</p>
-    </header>
 
-    <nav>
-        <a href="#quem-sou">Quem Sou</a>
-        <a href="#anuncios">Anúncios para Vendas</a>
-        <a href="#informacoes-natal">Informações dos Imóveis de Natal</a>
-        <a href="#indices">Tabela de Índices Imobiliários</a>
-        <a href="#contato">Contato</a>
-        <a href="#localizacao">Localização</a>
+  <!-- HEADER -->
+  <header class="site-header container" role="banner">
+    <div class="brand">
+      <h1>WCimóveis</h1>
+      <p>Wanderson Camilo — Corretor de Imóveis | CRECI-RN 8837</p>
+    </div>
+
+    <nav class="main-nav" aria-label="Menu principal">
+      <a href="#quem-sou">Quem Sou</a>
+      <a href="#anuncios">Anúncios para Vendas</a>
+      <a href="#informacoes-natal">Informações dos Imóveis de Natal</a>
+      <a href="#indices">Tabela de Índices Imobiliários</a>
+      <a href="#contato">Contato</a>
+      <a href="#localizacao">Localização</a>
     </nav>
+  </header>
 
-    <section id="quem-sou">
-        <h2>Quem Sou</h2>
-        <article>
-            <p>Sou <strong>Wanderson Camilo</strong>, corretor de imóveis com 37 anos, residente em Macaíba/RN. 
-            Formado em Gestão de Imóveis e inscrito no <strong>CRECI-RN 8837</strong>, atuo no mercado imobiliário com 
-            foco em imóveis de médio e alto padrão, sempre buscando oferecer atendimento diferenciado, 
-            transparência e confiança aos meus clientes.</p>
-        </article>
-    </section>
-
-    <section id="anuncios">
-        <h2>Anúncios para Vendas</h2>
-        <div class="grid-anuncios">
-            <div class="imovel">
-                <img src="images/imovel1.jpg" alt="Casa em condomínio fechado">
-                <div class="descricao">
-                    <h3>Casa em Condomínio Fechado - Natal/RN</h3>
-                    <p>Residência de 3 suítes, sala ampla, cozinha planejada e área gourmet. Localização privilegiada.</p>
-                </div>
-            </div>
-
-            <div class="imovel">
-                <img src="images/imovel2.jpg" alt="Apartamento moderno">
-                <div class="descricao">
-                    <h3>Apartamento de Alto Padrão - Parnamirim/RN</h3>
-                    <p>Apartamento com 3 quartos, varanda gourmet e 2 vagas de garagem. Condomínio com lazer completo.</p>
-                </div>
-            </div>
-
-            <div class="imovel">
-                <img src="images/imovel3.jpg" alt="Cobertura duplex">
-                <div class="descricao">
-                    <h3>Cobertura Duplex - Natal/RN</h3>
-                    <p>Luxuosa cobertura com piscina privativa, 4 suítes e vista para o mar.</p>
-                </div>
-            </div>
-
-            <div class="imovel">
-                <img src="images/imovel4.jpg" alt="Casa ampla com jardim">
-                <div class="descricao">
-                    <h3>Casa Ampla com Jardim - Parnamirim/RN</h3>
-                    <p>Casa com 4 quartos, 3 banheiros, garagem para 3 carros e amplo quintal arborizado.</p>
-                </div>
-            </div>
-
-            <div class="imovel">
-                <img src="images/imovel5.jpg" alt="Apartamento compacto">
-                <div class="descricao">
-                    <h3>Apartamento Compacto - Natal/RN</h3>
-                    <p>Ideal para casais ou investidores. 2 quartos, cozinha americana e ótima localização.</p>
-                </div>
-            </div>
+  <!-- HERO -->
+  <div class="container">
+    <section class="hero" aria-hidden="false">
+      <div class="inner">
+        <div>
+          <h2>Imóveis de médio/alto padrão em Natal/RN e Parnamirim/RN</h2>
+          <p>Atendimento personalizado com transparência. Confira os anúncios e informações de mercado cuidadosamente selecionadas.</p>
         </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- CONTEÚDO PRINCIPAL -->
+  <main class="container" role="main">
+
+    <!-- QUEM SOU -->
+    <section id="quem-sou">
+      <h2>Quem Sou</h2>
+      <article class="card">
+        <p><strong>Wanderson Camilo</strong>, 37 anos, corretor de imóveis, formado em Gestão de Imóveis. CRECI-RN 8837. Residente em Macaíba/RN. Atuo com foco em imóveis de médio e alto padrão, oferecendo atendimento pessoal, assessoria completa e visitas agendadas.</p>
+      </article>
     </section>
 
+    <!-- ANÚNCIOS -->
+    <section id="anuncios">
+      <h2>Anúncios para Vendas</h2>
+      <div class="grid-anuncios">
+
+        <!-- IMOVEL 1 -->
+        <article class="imovel" aria-labelledby="imovel1-title">
+          <img class="media" src="images/imovel1.jpg" alt="Fachada moderna de casa em condomínio em Natal, 3 suítes" loading="lazy">
+          <div class="body">
+            <h3 id="imovel1-title">Casa em Condomínio Fechado — Natal/RN</h3>
+            <p>3 suítes (1 suíte master com closet), sala de estar/jantar integradas, cozinha americana planejada, área gourmet com churrasqueira, garagem para 2 carros. Área construída ≈ 250 m². Condomínio com segurança 24h.</p>
+          </div>
+        </article>
+
+        <!-- IMOVEL 2 -->
+        <article class="imovel" aria-labelledby="imovel2-title">
+          <img class="media" src="images/imovel2.jpg" alt="Apartamento moderno com varanda gourmet em Parnamirim" loading="lazy">
+          <div class="body">
+            <h3 id="imovel2-title">Apartamento Alto Padrão — Parnamirim/RN</h3>
+            <p>3 quartos (1 suíte master), varanda gourmet com fechamento retrátil, piso em porcelanato, 2 vagas cobertas, área privativa ≈ 120 m². Condomínio com piscina, academia e salão de festas.</p>
+          </div>
+        </article>
+
+        <!-- IMOVEL 3 -->
+        <article class="imovel" aria-labelledby="imovel3-title">
+          <img class="media" src="images/imovel3.jpg" alt="Cobertura duplex com piscina e vista para o mar em Natal" loading="lazy">
+          <div class="body">
+            <h3 id="imovel3-title">Cobertura Duplex — Natal/RN</h3>
+            <p>Cobertura com piscina privativa, 4 suítes, cozinha gourmet, amplo terraço com vista para o mar. Acabamento de alto padrão, sistema de automação e 3 vagas de garagem. Área total ≈ 420 m².</p>
+          </div>
+        </article>
+
+        <!-- IMOVEL 4 -->
+        <article class="imovel" aria-labelledby="imovel4-title">
+          <img class="media" src="images/imovel4.jpg" alt="Casa ampla com jardim em Parnamirim, 4 quartos" loading="lazy">
+          <div class="body">
+            <h3 id="imovel4-title">Casa Ampla com Jardim — Parnamirim/RN</h3>
+            <p>4 quartos, 3 banheiros, ampla sala, área de serviço separada, quintal com paisagismo e vaga para 3 carros. Ideal família que busca espaço e privacidade.</p>
+          </div>
+        </article>
+
+        <!-- IMOVEL 5 -->
+        <article class="imovel" aria-labelledby="imovel5-title">
+          <img class="media" src="images/imovel5.jpg" alt="Apartamento compacto de 2 quartos em bairro nobre de Natal" loading="lazy">
+          <div class="body">
+            <h3 id="imovel5-title">Apartamento Compacto — Natal/RN (Tirol)</h3>
+            <p>2 quartos (1 suíte), cozinha americana, varanda, 1 vaga de garagem. Excelente localização em bairro nobre — ideal para casal ou investidor. Área ≈ 68 m².</p>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- INFORMAÇÕES DOS IMÓVEIS DE NATAL -->
     <section id="informacoes-natal">
-        <h2>Informações dos Imóveis de Natal</h2>
-        <article>
-            <p>O mercado imobiliário de Natal/RN segue aquecido em 2025, principalmente em bairros nobres e em condomínios residenciais. 
-            Os preços variam conforme a localização, infraestrutura e padrão de acabamento.</p>
-            <ul>
-                <li><strong>Residências em Condomínios:</strong> valores médios entre R$ 700.000,00 e R$ 1.500.000,00.</li>
-                <li><strong>Casas em Bairros Nobres:</strong> entre R$ 900.000,00 e R$ 2.000.000,00.</li>
-                <li><strong>Apartamentos de Classe Média:</strong> preços entre R$ 350.000,00 e R$ 600.000,00.</li>
-            </ul>
-        </article>
+      <h2>Informações dos Imóveis de Natal</h2>
+      <article class="card">
+        <p>Panorama do mercado imobiliário (dados gerais e estimativas):</p>
+        <ul class="lista-info" style="margin-top:10px">
+          <li><strong>Residências em Condomínios:</strong> média estimada de venda R$ 700.000 — R$ 1.500.000 (3–5 dormitórios, áreas de lazer e segurança).</li>
+          <li><strong>Casas em Bairros Nobres (Tirol, Petrópolis, Lagoa Nova):</strong> média R$ 900.000 — R$ 2.000.000, variando com terreno e padrão de acabamento.</li>
+          <li><strong>Apartamentos de Classe Média:</strong> média R$ 350.000 — R$ 600.000 (2–3 quartos, 1 suíte, varanda e 1–2 vagas).</li>
+        </ul>
+
+        <p style="margin-top:10px">As descrições acima são estimativas com base em mapeamentos de mercado — para valores precisos por imóvel e avaliações, consulte-nos para um laudo ou busca personalizada.</p>
+      </article>
     </section>
 
+    <!-- TABELA DE ÍNDICES IMOBILIÁRIOS -->
     <section id="indices">
-        <h2>Tabela de Índices Imobiliários</h2>
-        <article>
-            <p>Confira os principais índices atualizados do mercado imobiliário em 2025:</p>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Região</th>
-                        <th>Tipo de Imóvel</th>
-                        <th>Preço Médio (m²)</th>
-                        <th>Variação Anual (%)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Natal/RN</td>
-                        <td>Apartamento</td>
-                        <td>R$ 6.200</td>
-                        <td>+5,8%</td>
-                    </tr>
-                    <tr>
-                        <td>Natal/RN</td>
-                        <td>Casa em Condomínio</td>
-                        <td>R$ 6.800</td>
-                        <td>+6,1%</td>
-                    </tr>
-                    <tr>
-                        <td>Nordeste</td>
-                        <td>Residencial Médio</td>
-                        <td>R$ 5.500</td>
-                        <td>+4,9%</td>
-                    </tr>
-                    <tr>
-                        <td>Brasil</td>
-                        <td>Média Nacional</td>
-                        <td>R$ 7.000</td>
-                        <td>+7,2%</td>
-                    </tr>
-                </tbody>
-            </table>
-            <p>Esses dados reforçam o momento de valorização do mercado, sendo um ótimo período para investimentos e negociações.</p>
-        </article>
+      <h2>Tabela de Índices Imobiliários</h2>
+      <article class="card">
+        <p>Artigo-resumo: índices locais e nacionais (referência 2025 — estimativas).</p>
+
+        <div class="table-wrap" aria-hidden="false" style="margin-top:12px">
+          <table class="index-table" role="table" aria-label="Tabela de índices imobiliários">
+            <thead>
+              <tr>
+                <th>Região</th>
+                <th>Tipo de Imóvel</th>
+                <th>Preço Médio (m²)</th>
+                <th>Variação Anual (%)</th>
+                <th>Comentário</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Natal/RN</td>
+                <td>Apartamento</td>
+                <td>R$ 6.200</td>
+                <td>+5,8%</td>
+                <td>Demanda por apartamentos em bairros centrais e condomínios.</td>
+              </tr>
+              <tr>
+                <td>Natal/RN</td>
+                <td>Casa em Condomínio</td>
+                <td>R$ 6.800</td>
+                <td>+6,1%</td>
+                <td>Valorização via segurança e infraestrutura.</td>
+              </tr>
+              <tr>
+                <td>Nordeste</td>
+                <td>Residencial Médio</td>
+                <td>R$ 5.500</td>
+                <td>+4,9%</td>
+                <td>Crescimento estável em capitais e cidades turísticas.</td>
+              </tr>
+              <tr>
+                <td>Brasil</td>
+                <td>Média Nacional</td>
+                <td>R$ 7.000</td>
+                <td>+7,2%</td>
+                <td>Indicador FipeZap e médias do mercado.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p style="margin-top:12px">Este artigo tem caráter informativo. Para análises formais, consulte relatórios oficiais e corretoras especializadas.</p>
+      </article>
     </section>
 
+    <!-- CONTATO -->
     <section id="contato">
-        <h2>Contato</h2>
-        <article>
-            <p>Entre em contato para mais informações e agendamento de visitas:</p>
-            <ul>
-                <li>Telefone: (84) 99428-9931</li>
-                <li>Email: wandersoncamilo@wcimoveis.com</li>
-                <li>WhatsApp: (84) 99428-9931</li>
-                <li>Instagram: #wandersoncamilo89</li>
-            </ul>
-        </article>
+      <h2>Contato</h2>
+      <article class="card">
+        <p>Entre em contato para mais informações e agendamento de visitas:</p>
+        <ul style="margin-top:10px">
+          <li>Telefone: (84) 99428-9931</li>
+          <li>Email: wandersoncamilo@wcimoveis.com</li>
+          <li>WhatsApp: (84) 99428-9931</li>
+        </ul>
+
+        <!-- FORMULÁRIO (Formspree example) -->
+        <form class="form-contato" action="https://formspree.io/f/xpzvwkqq" method="POST">
+          <div class="form-row">
+            <div>
+              <label for="nome">Nome</label>
+              <input id="nome" name="nome" type="text" placeholder="Seu nome" required>
+            </div>
+            <div>
+              <label for="telefone">Telefone / WhatsApp</label>
+              <input id="telefone" name="telefone" type="text" placeholder="(xx) xxxxx-xxxx">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="full">
+              <label for="email">E-mail</label>
+              <input id="email" name="_replyto" type="email" placeholder="seu@email.com" required>
+            </div>
+          </div>
+
+          <div>
+            <label for="mensagem">Mensagem</label>
+            <textarea id="mensagem" name="mensagem" rows="5" placeholder="Como posso ajudar?" required></textarea>
+          </div>
+
+          <!-- Campo anti-spam (opcional) -->
+          <input type="text" name="_gotcha" style="display:none">
+
+          <button class="btn" type="submit">Enviar Mensagem</button>
+        </form>
+      </article>
     </section>
 
+    <!-- LOCALIZAÇÃO -->
     <section id="localizacao">
-        <h2>Localização</h2>
-        <article>
-            <p>Atendimento em Natal/RN, Parnamirim/RN e região metropolitana.</p>
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!..." width="100%" height="350" style="border:0;" allowfullscreen></iframe>
-        </article>
+      <h2>Localização</h2>
+      <article class="card">
+        <p>Atendimento em Natal/RN, Parnamirim/RN e região metropolitana. Agende sua visita — atendimento presencial e virtual.</p>
+        <!-- substitua o src do iframe por link do local correto -->
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!..." width="100%" height="300" style="border:0;border-radius:8px;margin-top:12px" allowfullscreen="" loading="lazy"></iframe>
+      </article>
     </section>
 
-    <footer>
-        <p>&copy; 2025 WCimóveis - Todos os direitos reservados.</p>
-    </footer>
+  </main>
 
-    <!-- Botão Flutuante WhatsApp -->
-    <a href="https://wa.me/5584988888888" class="whatsapp-float" target="_blank" title="Fale pelo WhatsApp">
-        <i class="fab fa-whatsapp"></i>
-    </a>
+  <!-- RODAPÉ -->
+  <footer class="site-footer container">
+    <small>&copy; <span id="ano"></span> WCimóveis — Wanderson Camilo • CRECI-RN 8837</small>
+  </footer>
+
+  <!-- BOTÃO WHATSAPP FIXO -->
+  <a class="whatsapp-float" href="https://wa.me/5584994289931?text=Ol%C3%A1%2C%20gostaria%20de%20informações%20sobre%20um%20im%C3%B3vel" target="_blank" aria-label="Abrir WhatsApp">
+    <!-- simples svg de ícone whatsapp embutido -->
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+      <path d="M20.5 3.5A11 11 0 1 0 12 23a10.7 10.7 0 0 0 5.7-1.6L22 22l-1.6-4.3A10.7 10.7 0 0 0 23 12 11 11 0 0 0 20.5 3.5z" fill="#25D366"/>
+      <path d="M17.6 14.2c-.3-.1-1.9-.9-2.2-1-.3-.1-.5-.1-.7.1-.2.2-.8.9-1 1.1-.2.2-.4.2-.7.1-.3-.1-1.2-.4-2.2-1.4-.8-.8-1.3-1.8-1.4-2.1-.1-.3 0-.5.1-.7.1-.2.3-.6.5-.9.2-.3.2-.5.3-.8.1-.3 0-.6-.1-.8-.1-.3-.7-1.7-1-2.2-.3-.5-.6-.4-.9-.4-.2 0-.5 0-.8 0-.3 0-.8.1-1.2.6-.4.5-1.6 1.6-1.6 3.9s1.6 4.6 1.8 4.9 3.1 4.7 7.5 6.2c4.4 1.5 4.4 1 5.2 1 0 0 1.6-0.8 1.9-3.1.3-2.3 0-4.1-1.2-4.5z" fill="#fff"/>
+    </svg>
+  </a>
+
+  <!-- SCRIPTS -->
+  <script>
+    // Atualiza ano do rodapé
+    document.getElementById('ano').textContent = new Date().getFullYear();
+
+    // A11y: foco ao navegar via hash (melhora UX em mobile)
+    window.addEventListener('hashchange', function(){
+      var el = document.querySelector(location.hash);
+      if(el){ el.setAttribute('tabindex','-1'); el.focus(); }
+    });
+  </script>
 </body>
 </html>
