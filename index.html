@@ -13,7 +13,7 @@
     body{
       font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
       background:#f6f6f6;color:#222;line-height:1.45;
-      -webkit-font-smoothing:antialiased;padding-bottom:100px;
+      -webkit-font-smoothing:antialiased;
     }
 
     /* LAYOUT */
@@ -33,21 +33,62 @@
     }
     nav.main-nav a{
       color:#fff;text-decoration:none;padding:10px 12px;border-radius:6px;
-      font-size:0.95rem;
+      font-size:0.95rem;cursor:pointer;
     }
     nav.main-nav a:hover{background:rgba(255,255,255,0.06)}
 
-    /* HERO */
+    /* PAGES */
+    .page {
+      display: none;
+      min-height: 100vh;
+      position: relative;
+      padding: 40px 20px;
+      overflow: hidden;
+    }
+    .page::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      opacity: 0.5; /* Transparente */
+      z-index: -1;
+    }
+    .page.active { display: block; }
+
+    /* Cores e backgrounds variados por página */
+    #page-home { background-color: rgba(173, 216, 230, 0.3); } /* Azul claro */
+    #page-home::before { background-image: url('images/bg-home.jpg'); } /* Ex: casa exterior */
+
+    #page-quem-sou { background-color: rgba(211, 211, 211, 0.3); } /* Cinza claro */
+    #page-quem-sou::before { background-image: url('images/bg-quem-sou.jpg'); } /* Ex: interior living room */
+
+    #page-anuncios { background-color: rgba(255, 165, 0, 0.3); } /* Laranja suave */
+    #page-anuncios::before { background-image: url('images/bg-anuncios.jpg'); } /* Ex: rooftop penthouse */
+
+    #page-informacoes-natal { background-color: rgba(200, 162, 200, 0.3); } /* Lilás */
+    #page-informacoes-natal::before { background-image: url('images/bg-informacoes.jpg'); } /* Ex: outro interior */
+
+    #page-indices { background-color: rgba(0, 0, 139, 0.3); } /* Azul escuro */
+    #page-indices::before { background-image: url('images/bg-indices.jpg'); } /* Ex: varanda */
+
+    #page-contato { background-color: rgba(169, 169, 169, 0.3); } /* Cinza médio */
+    #page-contato::before { background-image: url('images/bg-contato.jpg'); } /* Ex: sala */
+
+    #page-localizacao { background-color: rgba(255, 140, 0, 0.3); } /* Laranja claro */
+    #page-localizacao::before { background-image: url('images/bg-localizacao.jpg'); } /* Ex: exterior */
+
+    /* HERO (agora dentro da page-home) */
     .hero{background:linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0.05)), url('images/hero.jpg') center/cover no-repeat; color:#fff;padding:36px;border-radius:10px;margin:18px 0}
     .hero .inner{display:flex;gap:20px;align-items:center;flex-wrap:wrap}
     .hero h2{font-size:1.6rem;margin-bottom:8px}
     .hero p{max-width:780px;opacity:0.95}
 
     /* SECTIONS */
-    section{margin:28px 0}
     section h2{font-size:1.3rem;margin-bottom:14px;text-align:center}
 
-    article.card{background:#fff;border-radius:10px;padding:18px;border:1px solid #e6e6e6;box-shadow:0 6px 18px rgba(15,15,15,0.04)}
+    article.card{background:#fff;border-radius:10px;padding:18px;border:1px solid #e6e6e6;box-shadow:0 6px 18px rgba(15,15,15,0.04); position: relative; z-index: 1;}
 
     /* ANÚNCIOS GRID */
     .grid-anuncios{
@@ -65,7 +106,13 @@
     .imovel h3{font-size:1.05rem}
     .imovel p{font-size:0.95rem;color:#444;opacity:0.95}
 
-    /* RESPONSIVIDADE: medias e detalhes */
+    /* BOTÃO VOLTAR */
+    .btn-back {
+      background:#111;color:#fff;padding:12px 14px;border-radius:8px;border:0;cursor:pointer;font-weight:600;margin-bottom:20px;
+    }
+    .btn-back:hover{opacity:0.95}
+
+    /* RESPONSIVIDADE */
     @media (max-width: 1000px){
       .grid-anuncios{grid-template-columns:repeat(2, 1fr)}
       .imovel .media{height:200px}
@@ -111,7 +158,7 @@
     }
 
     /* RODAPÉ */
-    footer.site-footer{margin-top:28px;padding:18px;text-align:center;color:#fff;background:#111;border-top:4px solid #222;border-radius:8px}
+    footer.site-footer{position:fixed;bottom:0;left:0;width:100%;padding:18px;text-align:center;color:#fff;background:#111;border-top:4px solid #222;z-index:1000;}
     footer.site-footer a{color:#fff;text-decoration:underline}
 
     /* pequenas melhorias para imagens responsivas (lazy) */
@@ -120,7 +167,7 @@
 </head>
 <body>
 
-  <!-- HEADER -->
+  <!-- HEADER (visível apenas na home) -->
   <header class="site-header container" role="banner">
     <div class="brand">
       <h1>WCimóveis</h1>
@@ -128,40 +175,42 @@
     </div>
 
     <nav class="main-nav" aria-label="Menu principal">
-      <a href="#quem-sou">Quem Sou</a>
-      <a href="#anuncios">Anúncios para Vendas</a>
-      <a href="#informacoes-natal">Informações dos Imóveis de Natal</a>
-      <a href="#indices">Tabela de Índices Imobiliários</a>
-      <a href="#contato">Contato</a>
-      <a href="#localizacao">Localização</a>
+      <a onclick="showPage('page-quem-sou')">Quem Sou</a>
+      <a onclick="showPage('page-anuncios')">Anúncios para Vendas</a>
+      <a onclick="showPage('page-informacoes-natal')">Informações dos Imóveis de Natal</a>
+      <a onclick="showPage('page-indices')">Tabela de Índices Imobiliários</a>
+      <a onclick="showPage('page-contato')">Contato</a>
+      <a onclick="showPage('page-localizacao')">Localização</a>
     </nav>
   </header>
 
-  <!-- HERO -->
-  <div class="container">
-    <section class="hero" aria-hidden="false">
-      <div class="inner">
-        <div>
-          <h2>Imóveis de médio/alto padrão em Natal/RN e Parnamirim/RN</h2>
-          <p>Atendimento personalizado com transparência. Confira os anúncios e informações de mercado cuidadosamente selecionadas.</p>
+  <!-- CONTEÚDO PRINCIPAL - PÁGINAS -->
+  <main role="main">
+
+    <!-- PAGE HOME -->
+    <section id="page-home" class="page container">
+      <section class="hero" aria-hidden="false">
+        <div class="inner">
+          <div>
+            <h2>Imóveis de médio/alto padrão em Natal/RN e Parnamirim/RN</h2>
+            <p>Atendimento personalizado com transparência. Confira os anúncios e informações de mercado cuidadosamente selecionadas.</p>
+          </div>
         </div>
-      </div>
+      </section>
     </section>
-  </div>
 
-  <!-- CONTEÚDO PRINCIPAL -->
-  <main class="container" role="main">
-
-    <!-- QUEM SOU -->
-    <section id="quem-sou">
+    <!-- PAGE QUEM SOU -->
+    <section id="page-quem-sou" class="page container">
+      <button class="btn-back" onclick="showPage('page-home')">Voltar à Página Principal</button>
       <h2>Quem Sou</h2>
       <article class="card">
         <p><strong>Wanderson Camilo</strong>, 37 anos, corretor de imóveis, formado em Gestão de Imóveis. CRECI-RN 8837. Residente em Macaíba/RN. Atuo com foco em imóveis de médio e alto padrão, oferecendo atendimento pessoal, assessoria completa e visitas agendadas.</p>
       </article>
     </section>
 
-    <!-- ANÚNCIOS -->
-    <section id="anuncios">
+    <!-- PAGE ANÚNCIOS -->
+    <section id="page-anuncios" class="page container">
+      <button class="btn-back" onclick="showPage('page-home')">Voltar à Página Principal</button>
       <h2>Anúncios para Vendas</h2>
       <div class="grid-anuncios">
 
@@ -213,8 +262,9 @@
       </div>
     </section>
 
-    <!-- INFORMAÇÕES DOS IMÓVEIS DE NATAL -->
-    <section id="informacoes-natal">
+    <!-- PAGE INFORMAÇÕES DOS IMÓVEIS DE NATAL -->
+    <section id="page-informacoes-natal" class="page container">
+      <button class="btn-back" onclick="showPage('page-home')">Voltar à Página Principal</button>
       <h2>Informações dos Imóveis de Natal</h2>
       <article class="card">
         <p>Panorama do mercado imobiliário (dados gerais e estimativas):</p>
@@ -228,8 +278,9 @@
       </article>
     </section>
 
-    <!-- TABELA DE ÍNDICES IMOBILIÁRIOS -->
-    <section id="indices">
+    <!-- PAGE TABELA DE ÍNDICES IMOBILIÁRIOS -->
+    <section id="page-indices" class="page container">
+      <button class="btn-back" onclick="showPage('page-home')">Voltar à Página Principal</button>
       <h2>Tabela de Índices Imobiliários</h2>
       <article class="card">
         <p>Artigo-resumo: índices locais e nacionais (referência 2025 — estimativas).</p>
@@ -282,8 +333,9 @@
       </article>
     </section>
 
-    <!-- CONTATO -->
-    <section id="contato">
+    <!-- PAGE CONTATO -->
+    <section id="page-contato" class="page container">
+      <button class="btn-back" onclick="showPage('page-home')">Voltar à Página Principal</button>
       <h2>Contato</h2>
       <article class="card">
         <p>Entre em contato para mais informações e agendamento de visitas:</p>
@@ -326,8 +378,9 @@
       </article>
     </section>
 
-    <!-- LOCALIZAÇÃO -->
-    <section id="localizacao">
+    <!-- PAGE LOCALIZAÇÃO -->
+    <section id="page-localizacao" class="page container">
+      <button class="btn-back" onclick="showPage('page-home')">Voltar à Página Principal</button>
       <h2>Localização</h2>
       <article class="card">
         <p>Atendimento em Natal/RN, Parnamirim/RN e região metropolitana. Agende sua visita — atendimento presencial e virtual.</p>
@@ -339,8 +392,8 @@
   </main>
 
   <!-- RODAPÉ -->
-  <footer class="site-footer container">
-    <small>&copy; <span id="ano"></span> WCimóveis — Wanderson Camilo • CRECI-RN 8837</small>
+  <footer class="site-footer">
+    <small>&copy; <span id="ano"></span> WCimóveis — Wanderson Camilo • CRECI-RN 8837 | Autor: Sócrates Borges - Contato 9 9802-8166</small>
   </footer>
 
   <!-- BOTÃO WHATSAPP FIXO -->
@@ -357,7 +410,23 @@
     // Atualiza ano do rodapé
     document.getElementById('ano').textContent = new Date().getFullYear();
 
-    // A11y: foco ao navegar via hash (melhora UX em mobile)
+    // Função para mostrar páginas
+    function showPage(pageId) {
+      const pages = document.querySelectorAll('.page');
+      pages.forEach(page => page.style.display = 'none');
+      document.getElementById(pageId).style.display = 'block';
+      if (pageId === 'page-home') {
+        document.querySelector('header.site-header').style.display = 'flex';
+      } else {
+        document.querySelector('header.site-header').style.display = 'none';
+      }
+      window.scrollTo(0, 0); // Volta ao topo
+    }
+
+    // Inicia na home
+    showPage('page-home');
+
+    // A11y: foco ao navegar (adaptado)
     window.addEventListener('hashchange', function(){
       var el = document.querySelector(location.hash);
       if(el){ el.setAttribute('tabindex','-1'); el.focus(); }
